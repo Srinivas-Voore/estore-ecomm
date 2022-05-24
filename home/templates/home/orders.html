@@ -1,0 +1,60 @@
+{% extends 'home/base.html' %}
+
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<div class="cart-page">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart-page-inner">
+                            <p class="display-4 pl-4 ml-4">Your Orders</p>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Sno.</th>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Date</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for order in orders %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td><img style="height: 100px;" class="rounded" src="{{order.product.image.url}}" alt=""></td>
+                                            <td>{{order.product.name}}</td>
+                                            <td>{{order.date}}</td>
+                                            <td>{{order.price|currency}}</td>
+                                            <td>{{order.quantity}}</td>
+                                            <td>{{order.quantity|multiply:order.price|currency}}</td>
+                                            {% if order.status %}
+                                            <td>Completed
+                                            </td>
+                                            {%else%}
+                                            <td>
+                                                Pending
+                                            </td>
+                                            {% endif %}
+
+                                        </tr>
+                                        {% endfor %}
+               
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+{% endblock %}
